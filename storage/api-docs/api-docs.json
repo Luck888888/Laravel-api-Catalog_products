@@ -1,0 +1,371 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Product_catalog - админка",
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "http://product-catalog.com/api/v1",
+            "description": "Local server"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User registration",
+                "operationId": "authUser",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/RegisterRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "success": true
+                                        }
+                                    },
+                                    "bool": {
+                                        "summary": "A boolean value.",
+                                        "value": false
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User login",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/LoginRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "success": true
+                                        }
+                                    },
+                                    "bool": {
+                                        "summary": "A boolean value.",
+                                        "value": false
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log out.",
+                "description": "Method revokes the current access token.",
+                "operationId": "logoutUser",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "success": true
+                                        }
+                                    },
+                                    "bool": {
+                                        "summary": "A boolean value.",
+                                        "value": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Нет доступа"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/product": {
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create product",
+                "description": "Create product",
+                "operationId": "bcdaed5a3b2c29b1c65a934c19046567",
+                "parameters": [
+                    {
+                        "name": "properties",
+                        "in": "query",
+                        "description": "Properties of product",
+                        "required": false,
+                        "style": "deepObject",
+                        "schema": {
+                            "type": "object",
+                            "example": "{'color':'red','weight':'120'}"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/CreateProductRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "success": true
+                                        }
+                                    },
+                                    "bool": {
+                                        "summary": "A boolean value.",
+                                        "value": false
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "List products",
+                "description": "List products",
+                "operationId": "bcd225f13a81e30d9ebed5cac795dc89",
+                "parameters": [
+                    {
+                        "name": "filters",
+                        "in": "query",
+                        "required": false,
+                        "style": "deepObject",
+                        "schema": {
+                            "type": "object",
+                            "example": "{'color':'red'}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Нет доступа"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ProductCollection": {
+                "title": "ProductCollection",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ProductItemResource"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ProductItemResource": {
+                "title": "ProductItemResource",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "ProductId"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "ProductName"
+                    },
+                    "price": {
+                        "type": "integer",
+                        "example": "ProductPrice"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "example": "ProductQuantity"
+                    },
+                    "properties": {
+                        "type": "string",
+                        "example": "ProductProperties"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "requestBodies": {
+            "CreateProductRequest": {
+                "description": "Create product.",
+                "required": true,
+                "content": {
+                    "application/x-www-form-urlencoded": {
+                        "schema": {
+                            "required": [
+                                "name",
+                                "price",
+                                "quantity"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "description": "The product name.",
+                                    "type": "string",
+                                    "example": "ProductName"
+                                },
+                                "price": {
+                                    "description": "The product price.",
+                                    "type": "integer",
+                                    "example": "ProductPrice"
+                                },
+                                "quantity": {
+                                    "description": "The product quantity.",
+                                    "type": "integer",
+                                    "example": "ProductQuantity"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "LoginRequest": {
+                "description": "Login users.",
+                "required": true,
+                "content": {
+                    "application/x-www-form-urlencoded": {
+                        "schema": {
+                            "required": [
+                                "email",
+                                "password"
+                            ],
+                            "properties": {
+                                "email": {
+                                    "description": "The user email.",
+                                    "type": "string",
+                                    "format": "email",
+                                    "example": "user@email.com"
+                                },
+                                "password": {
+                                    "description": "The user password.",
+                                    "type": "string",
+                                    "example": "UserPassword"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "RegisterRequest": {
+                "description": "Register users.",
+                "required": true,
+                "content": {
+                    "application/x-www-form-urlencoded": {
+                        "schema": {
+                            "required": [
+                                "name",
+                                "email",
+                                "phone",
+                                "password"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "description": "The user name.",
+                                    "type": "string",
+                                    "example": "UserName"
+                                },
+                                "email": {
+                                    "description": "The user email.",
+                                    "type": "string",
+                                    "example": "UserEmail"
+                                },
+                                "phone": {
+                                    "description": "The user phone.",
+                                    "type": "string",
+                                    "example": "UserPhone"
+                                },
+                                "password": {
+                                    "description": "The user password.",
+                                    "type": "string",
+                                    "format": "password",
+                                    "example": "UserPassword"
+                                },
+                                "password_confirmation": {
+                                    "description": "The user password confirmation.",
+                                    "type": "string",
+                                    "format": "password",
+                                    "example": "UserConfirmationPassword"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
